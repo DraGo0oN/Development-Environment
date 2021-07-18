@@ -1,14 +1,15 @@
 # *** For Ubuntu 18.04 => Ubuntu 21.04 ***
 GN='\033[0;32m'
 RD='\033[0;31m'
+YO='\033[0;33m'
 NC='\033[0m'
 if [ "$(whoami)" != 'root' ]; then
 printf "${RD}You have to execute this script as root user${NC}\n"
 exit 1;
 fi
-printf "${GN}Installing Development/Production Environment${NC}\n"
+printf "${RD}Powered By DraGoN => ${YO}bit.ly/ydrag0n ${NC}\n"
 sleep 5
-printf "${RD}Powered By DraGoN${NC}\n"
+printf "${GN}Installing Development/Production Environment${NC}\n"
 sleep 5
 printf "${RD}Please run this script on fresh install${NC}\n"
 sleep 5
@@ -118,4 +119,4 @@ printf "${GN}Please Run => mysql_secure_installation <= To Configure MariaDB${NC
 sleep 5
 printf "${GN}Please upload your files to /var/www/html if you have choosed Normal or Laravel${NC}\n"
 sleep 5
-printf "${RD}By DraGoN${NC}\n"
+printf "${YO}Enjoy!${NC}\n"
