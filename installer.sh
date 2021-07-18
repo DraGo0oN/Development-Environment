@@ -77,12 +77,12 @@ cd /etc/apache2/sites-available && rm -rf * && rm -rf /var/www/html/*
 sleep 5
 function ask_user() {    
 
-echo -e "${RD}
+echo -e "${YO}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 |                    ** Please Select **                       |
 |              1.) For Installing for Laravel.                 |
 |              2.) For Normal (For any php script).            |
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#\n"
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#${NC}\n"
 
 read -e -p "Select : " choice
 
