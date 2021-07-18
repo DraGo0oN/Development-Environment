@@ -75,15 +75,24 @@ systemctl restart apache2
 a2dissite 000-default.conf
 cd /etc/apache2/sites-available && rm -rf * && rm -rf /var/www/html/*
 sleep 5
-read -r -p "Do you want to install it for laravel ( Y => For Yes -- N => For No )? " response
-case "$response" in
-    [yY][eE][sS]|[yY]) 
-        wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-laravel.conf && a2ensite dragon-laravel.conf && systemctl reload apache2
-        ;;
-    *)
-        wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-normal.conf && a2ensite dragon-normal.conf && systemctl reload apache2
-        ;;
-esac
+while true
+do
+	read -r -p "Do you want to install it for laravel ( Y => For Yes -- N => For No )? " input
+
+	case $input in
+	    [yY][eE][sS]|[yY])
+			wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-laravel.conf && a2ensite dragon-laravel.conf && systemctl reload apache2
+			break
+			;;
+	    [nN][oO]|[nN])
+			wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-normal.conf && a2ensite dragon-normal.conf && systemctl reload apache2
+			break
+	       		;;
+	    *)
+		echo "Invalid choice..."
+		;;
+	esac
+done
 fi
 sleep 5
 systemctl restart apache2
