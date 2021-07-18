@@ -1,3 +1,4 @@
+#!/bin/bash
 # *** For Ubuntu 18.04 => Ubuntu 21.04 ***
 GN='\033[0;32m'
 RD='\033[0;31m'
@@ -83,6 +84,7 @@ case "$response" in
         wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-normal.conf && a2ensite dragon-normal.conf && systemctl reload apache2
         ;;
 esac
+fi
 sleep 5
 systemctl restart apache2
 
