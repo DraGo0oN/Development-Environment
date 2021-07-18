@@ -82,6 +82,7 @@ while true; do
     esac
 done
 }
+sleep 5
 yes_or_no
 sleep 5
 systemctl restart apache2
