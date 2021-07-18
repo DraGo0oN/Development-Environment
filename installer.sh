@@ -73,14 +73,16 @@ a2enmod rewrite
 systemctl restart apache2
 a2dissite 000-default.conf
 cd /etc/apache2/sites-available && rm -rf * && rm -rf /var/www/html/*
-sleep 2
-echo "Do you want to install it for laravel ( y => For Yes -- n => For No )?"
-read pie
-if [[ $pie == [Yy]* ]]; then
-    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-laravel.conf && a2ensite dragon-laravel.conf && systemctl reload apache2
-else
-    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-normal.conf && a2ensite dragon-normal.conf && systemctl reload apache2
-fi
+function yes_or_no {
+while true; do
+    read -p "Do you want to install it for laravel ( Y => For Yes -- N => For No )?" yn
+    case $yn in
+        [Yy]* ) wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-laravel.conf && a2ensite dragon-laravel.conf && systemctl reload apache2; break;;
+        [Nn]* ) wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-normal.conf && a2ensite dragon-normal.conf && systemctl reload apache2; break;;
+    esac
+done
+}
+yes_or_no
 sleep 5
 systemctl restart apache2
 
