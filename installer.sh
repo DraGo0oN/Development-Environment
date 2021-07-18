@@ -74,7 +74,7 @@ systemctl restart apache2
 a2dissite 000-default.conf
 cd /etc/apache2/sites-available && rm -rf * && rm -rf /var/www/html/*
 sleep 2
-printf "${GN}Do you want to install it for laravel ${YO}( y => For Yes -- n => For No )${NC}? > "
+echo "Do you want to install it for laravel ( y => For Yes -- n => For No )?"
 read pie
 if [[ $pie == [Yy]* ]]; then
     wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-laravel.conf && a2ensite dragon-laravel.conf && systemctl reload apache2
