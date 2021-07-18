@@ -1,4 +1,6 @@
-# Development/Production Environment For Ubuntu 18.04 => Ubuntu 21.04
+# Development/Production Environment
+
+For Ubuntu 18.04 => Ubuntu 21.04
 
 Bash Script For Easy Installing Apache2, PHP, MariaDB, Nodejs and Python.
 
