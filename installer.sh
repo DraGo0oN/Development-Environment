@@ -75,25 +75,34 @@ systemctl restart apache2
 a2dissite 000-default.conf
 cd /etc/apache2/sites-available && rm -rf * && rm -rf /var/www/html/*
 sleep 5
-while true
-do
-	read -r -p "Do you want to install it for laravel ( Y => For Yes -- N => For No )? " input
+function ask_user() {    
 
-	case $input in
-	    [yY][eE][sS]|[yY])
-			wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-laravel.conf && a2ensite dragon-laravel.conf && systemctl reload apache2
-			break
-			;;
-	    [nN][oO]|[nN])
-			wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-normal.conf && a2ensite dragon-normal.conf && systemctl reload apache2
-			break
-	       		;;
-	    *)
-		echo "Invalid choice..."
-		;;
-	esac
-done
+echo -e "${RD}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+|                    ** Please Select **                       |
+|              1.) For Installing for Laravel.                 |
+|              2.) For Normal (For any php script).            |
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#\n"
+
+read -e -p "Select : " choice
+
+if [ "$choice" == "1" ]; then
+
+    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-laravel.conf && a2ensite dragon-laravel.conf && systemctl reload apache2
+
+elif [ "$choice" == "2" ]; then
+
+    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-normal.conf && a2ensite dragon-normal.conf && systemctl reload apache2
+
+else
+
+    echo "Please select 1 or 2." && sleep 3
+    clear && ask_user
+
 fi
+}
+
+ask_user
 sleep 5
 systemctl restart apache2
 
