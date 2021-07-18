@@ -116,4 +116,6 @@ printf "${GN}Installation has been completed!${NC}\n"
 sleep 5
 printf "${GN}Please Run => mysql_secure_installation <= To Configure MariaDB${NC}\n"
 sleep 5
+printf "${GN}Please upload your files to /var/www/html if you have choosed Normal or Laravel${NC}\n"
+sleep 5
 printf "${RD}By DraGoN${NC}\n"
