@@ -17,7 +17,7 @@ function GetSysInfo() {
 	CPU_INFO=$(getconf _NPROCESSORS_ONLN)
 
 	printf "${GN}Your OS${NC}:${YO} ${SYS_VERSION}${NC}\n"
-	printf "${YO}System Specs${NC}: ${NC}Bit${NC}: ${GN}x${SYS_BIT}${NC} -- ${NC}Ram: ${GN}${MEM_TOTAL}Mb ${NC} -- Cores: ${GN}${CPU_INFO}${NC}\n"
+	printf "${YO}Your System Specs${NC}: ${NC}Bit${NC}: ${GN}x${SYS_BIT}${NC} -- ${NC}Ram: ${GN}${MEM_TOTAL}Mb ${NC} -- Cores: ${GN}${CPU_INFO}${NC}\n"
 }
 GetSysInfo
 function install_or_no() {    
