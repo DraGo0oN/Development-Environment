@@ -19,8 +19,8 @@ function GetSysInfo() {
 	printf "${GN}Your OS${NC}:${YO} ${SYS_VERSION}${NC}\n"
 	printf "${YO}Your System Specs${NC}: ${NC}Bit${NC}: ${GN}x${SYS_BIT}${NC} -- ${NC}Ram: ${GN}${MEM_TOTAL}Mb ${NC} -- Cores: ${GN}${CPU_INFO}${NC}\n"
 }
-GetSysInfo
 function install_or_no() {
+GetSysInfo
 echo -e "${YO}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 |    ** Do you wish to start the installation? **      |
@@ -44,7 +44,7 @@ elif [ "$choice" == "2" ]; then
 else
 
     printf "${RD}Invalid choice!${NC}😕\n" && sleep 3
-    clear && GetSysInfo && install_or_no
+    clear && install_or_no
 
 fi
 }
