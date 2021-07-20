@@ -252,42 +252,42 @@ elif [ "$choice" == "9" ]; then
 
     echo -e "Installing PHP 7.0 (Openlitespeed) ..."
     sleep 5
-	apt install lsphp70 lsphp70-{mysql,sqlite3,pgsql,curl,imap}
+	apt -y install lsphp70 lsphp70-{mysql,sqlite3,pgsql,curl,imap}
     systemctl restart lsws
 
 elif [ "$choice" == "10" ]; then
 
     echo -e "Installing PHP 7.1 (Openlitespeed) ..."
     sleep 5
-	apt install lsphp71 lsphp71-{mysql,sqlite3,pgsql,curl,imap}
+	apt -y install lsphp71 lsphp71-{mysql,sqlite3,pgsql,curl,imap}
     systemctl restart lsws
 
 elif [ "$choice" == "11" ]; then
 
     echo -e "Installing PHP 7.2 (Openlitespeed) ..."
     sleep 5
-	apt install lsphp72 lsphp72-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
+	apt -y install lsphp72 lsphp72-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
     systemctl restart lsws
 
 elif [ "$choice" == "12" ]; then
 
     echo -e "Installing PHP 7.3 (Openlitespeed) ..."
     sleep 5
-	apt install lsphp73 lsphp73-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
+	apt -y install lsphp73 lsphp73-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
     systemctl restart lsws
 
 elif [ "$choice" == "13" ]; then
 
     echo -e "Installing PHP 7.4 (Openlitespeed) ..."
     sleep 5
-	apt install lsphp74 lsphp74-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
+	apt -y install lsphp74 lsphp74-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
     systemctl restart lsws
 
 elif [ "$choice" == "14" ]; then
 
     echo -e "Installing PHP 8.0 (Openlitespeed) ..."
     sleep 5
-	apt install lsphp80 lsphp80-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
+	apt -y install lsphp80 lsphp80-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
     systemctl restart lsws
 
 elif [ "$choice" == "15" ]; then
