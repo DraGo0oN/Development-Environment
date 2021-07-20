@@ -10,4 +10,4 @@ To Install => Simply run ``` apt -y install wget && wget https://raw.githubuserc
 
 # Known Bugs
 
-1- You will have a problem after install nginx that you have to run this ```rm -rf /etc/nginx/sites-enabled/dragon-normal.conf && systemctl restart nginx``` if you have choosed it for Laravel. Also, if you have choosed it for normal (for any php script) then you have to run this ```rm -rf /etc/nginx/sites-enabled/dragon-laravel.conf && systemctl restart nginx```
+1- You will have a problem after installing Nginx that you have to run this ```rm -rf /etc/nginx/sites-enabled/dragon-normal.conf && systemctl restart nginx``` if you have chosen it for Laravel. Also, if you have chosen it for normal (for any php script) then you have to run this ```rm -rf /etc/nginx/sites-enabled/dragon-laravel.conf && systemctl restart nginx```
