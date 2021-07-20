@@ -124,6 +124,11 @@ if [ "$choice" == "1" ]; then
 
 function apache_vhost() {    
 
+a2enmod rewrite
+systemctl restart apache2
+a2dissite 000-default.conf
+rm -rf /var/www/html/*
+
 echo -e "${YO}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 |                    ** Please Select **                       |
@@ -159,8 +164,40 @@ elif [ "$choice" == "2" ]; then
 
     echo -e "Installing Nginx ..."
     apt -y install nginx
+
+function nginx_vhost() {    
+
+rm -rf /etc/nginx/sites-enabled/default
+rm -rf /var/www/html/*
+echo -e "${YO}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+|                    ** Please Select **                       |
+|              1.) For  Laravel.                               |
+|              2.) For Any PHP Script.                         |
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#${NC}\n"
+
+read -e -p "Select : " choice
+
+if [ "$choice" == "1" ]; then
+
+    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-laravel.conf
+
+elif [ "$choice" == "2" ]; then
+
+    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-normal.conf
+
+else
+
+    echo "Please select 1 or 2." && sleep 3
+    clear && nginx_vhost
+
+fi
+}
+
+nginx_vhost
+
     systemctl enable nginx
-    systemctl start nginx
+#    systemctl start nginx
 
 elif [ "$choice" == "3" ]; then
 
@@ -207,6 +244,10 @@ if [ "$choice" == "1" ]; then
     sleep 5
     apt -y install php5.6 php5.6-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache} libapache2-mod-php5.6
     systemctl restart apache2
+    PHP_SOCKET1="/run/php/php5.6-fpm.sock"
+    sed -i -e "s@<php_socket>@${PHP_SOCKET1}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET1}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
+    systemctl start nginx
     systemctl restart nginx
 
 elif [ "$choice" == "2" ]; then
@@ -215,6 +256,10 @@ elif [ "$choice" == "2" ]; then
     sleep 5
     apt -y install php7.0 php7.0-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache} libapache2-mod-php7.0
     systemctl restart apache2
+    PHP_SOCKET2="/run/php/php7.0-fpm.sock"
+    sed -i -e "s@<php_socket>@${PHP_SOCKET2}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET2}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
+    systemctl start nginx
     systemctl restart nginx
 
 elif [ "$choice" == "3" ]; then
@@ -223,6 +268,10 @@ elif [ "$choice" == "3" ]; then
     sleep 5
     apt -y install php7.1 php7.1-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache} libapache2-mod-php7.1
     systemctl restart apache2
+    PHP_SOCKET3="/run/php/php7.1-fpm.sock"
+    sed -i -e "s@<php_socket>@${PHP_SOCKET3}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET3}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
+    systemctl start nginx
     systemctl restart nginx
 
 elif [ "$choice" == "4" ]; then
@@ -231,6 +280,10 @@ elif [ "$choice" == "4" ]; then
     sleep 5
     apt -y install php7.2 php7.2-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache} libapache2-mod-php7.2
     systemctl restart apache2
+    PHP_SOCKET4="/run/php/php7.2-fpm.sock"
+    sed -i -e "s@<php_socket>@${PHP_SOCKET4}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET4}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
+    systemctl start nginx
     systemctl restart nginx
 
 elif [ "$choice" == "5" ]; then
@@ -239,6 +292,10 @@ elif [ "$choice" == "5" ]; then
     sleep 5
     apt -y install php7.3 php7.3-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache} libapache2-mod-php7.3
     systemctl restart apache2
+    PHP_SOCKET5="/run/php/php7.3-fpm.sock"
+    sed -i -e "s@<php_socket>@${PHP_SOCKET5}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET5}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
+    systemctl start nginx
     systemctl restart nginx
 
 elif [ "$choice" == "6" ]; then
@@ -247,6 +304,10 @@ elif [ "$choice" == "6" ]; then
     sleep 5
     apt -y install php7.4 php7.4-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache} libapache2-mod-php7.4
     systemctl restart apache2
+    PHP_SOCKET6="/run/php/php7.4-fpm.sock"
+    sed -i -e "s@<php_socket>@${PHP_SOCKET6}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET6}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
+    systemctl start nginx
     systemctl restart nginx
 
 elif [ "$choice" == "7" ]; then
@@ -255,6 +316,10 @@ elif [ "$choice" == "7" ]; then
     sleep 5
     apt -y install php8.0 php8.0-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache} libapache2-mod-php8.0
     systemctl restart apache2
+    PHP_SOCKET7="/run/php/php8.0-fpm.sock"
+    sed -i -e "s@<php_socket>@${PHP_SOCKET7}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET7}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
+    systemctl start nginx
     systemctl restart nginx
 
 elif [ "$choice" == "8" ]; then
