@@ -121,14 +121,13 @@ if [ "$choice" == "1" ]; then
 
     echo -e "Installing Apache ..."
     apt -y install apache2
+    a2enmod rewrite
+    systemctl restart apache2
+    a2dissite 000-default.conf
+    rm -rf /var/www/html/* && rm -rf /etc/apache2/sites-available/*
+    sleep 3
 
-function apache_vhost() {    
-
-a2enmod rewrite
-systemctl restart apache2
-a2dissite 000-default.conf
-rm -rf /var/www/html/* && rm -rf /etc/apache2/sites-available/*
-
+function apache_vhost() {
 echo -e "${YO}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 |                    ** Please Select **                       |
@@ -140,11 +139,11 @@ read -e -p "Select : " choice
 
 if [ "$choice" == "1" ]; then
 
-    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-laravel.conf /etc/apache2/sites-available/ && a2ensite dragon-laravel.conf && systemctl reload apache2
+    cd /etc/apache2/sites-available && wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-laravel.conf && a2ensite dragon-laravel.conf && systemctl reload apache2
 
 elif [ "$choice" == "2" ]; then
 
-    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-normal.conf /etc/apache2/sites-available/ && a2ensite dragon-normal.conf && systemctl reload apache2
+    cd /etc/apache2/sites-available && wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-normal.conf && a2ensite dragon-normal.conf && systemctl reload apache2
 
 else
 
@@ -164,10 +163,8 @@ elif [ "$choice" == "2" ]; then
 
     echo -e "Installing Nginx ..."
     apt -y install nginx
-
+    rm -rf /var/www/html/*
 function nginx_vhost() {    
-
-rm -rf /etc/nginx/sites-enabled/default
 rm -rf /var/www/html/*
 echo -e "${YO}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -180,11 +177,11 @@ read -e -p "Select : " choice
 
 if [ "$choice" == "1" ]; then
 
-    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-laravel.conf /etc/nginx/conf.d/
+    cd /etc/nginx/conf.d && wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-laravel.conf && rm -rf /etc/nginx/sites-enabled/default
 
 elif [ "$choice" == "2" ]; then
 
-    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-normal.conf /etc/nginx/conf.d/
+    cd /etc/nginx/conf.d && wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-normal.conf && rm -rf /etc/nginx/sites-enabled/default
 
 else
 
