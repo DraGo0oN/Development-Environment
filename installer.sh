@@ -54,6 +54,7 @@ SERVICE="lsws"
 ADMIN_PASSWORD=$(cat /usr/local/lsws/adminpasswd)
 if systemctl status "$SERVICE" >/dev/null
 then
+    echo "*** Please Save this ***"
     echo "Openlitespeed: ${ADMIN_PASSWORD}"
 else
     echo ""
