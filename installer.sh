@@ -181,12 +181,10 @@ read -e -p "Select : " choice
 if [ "$choice" == "1" ]; then
 
     curl -o /etc/nginx/sites-available/dragon-laravel.conf https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-laravel.conf 
-    ln -sf /etc/nginx/sites-available/dragon-laravel.conf /etc/nginx/sites-enabled/dragon-laravel.conf
 
 elif [ "$choice" == "2" ]; then
 
     curl -o /etc/nginx/sites-available/dragon-normal.conf  https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-normal.conf
-    ln -sf /etc/nginx/sites-available/dragon-normal.conf /etc/nginx/sites-enabled/dragon-normal.conf
 
 else
 
@@ -277,8 +275,10 @@ elif [ "$choice" == "2" ]; then
     sleep 3
     apt -y install php5.6 php5.6-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache}
     PHP_SOCKET1="/run/php/php5.6-fpm.sock"
-    sed -i -e "s@<php_socket>@${PHP_SOCKET1}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
-    sed -i -e "s@<php_socket>@${PHP_SOCKET1}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET1}@g" /etc/nginx/sites-available/dragon-laravel.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET1}@g" /etc/nginx/sites-available/dragon-normal.conf
+    ln -sf /etc/nginx/sites-available/dragon-laravel.conf /etc/nginx/sites-enabled/dragon-laravel.conf
+    ln -sf /etc/nginx/sites-available/dragon-normal.conf /etc/nginx/sites-enabled/dragon-normal.conf
     systemctl start nginx
     systemctl restart nginx
 
@@ -337,8 +337,10 @@ elif [ "$choice" == "2" ]; then
     sleep 3
     apt -y install php7.0 php7.0-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache}
     PHP_SOCKET2="/run/php/php7.0-fpm.sock"
-    sed -i -e "s@<php_socket>@${PHP_SOCKET2}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
-    sed -i -e "s@<php_socket>@${PHP_SOCKET2}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET2}@g" /etc/nginx/sites-available/dragon-laravel.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET2}@g" /etc/nginx/sites-available/dragon-normal.conf
+    ln -sf /etc/nginx/sites-available/dragon-laravel.conf /etc/nginx/sites-enabled/dragon-laravel.conf
+    ln -sf /etc/nginx/sites-available/dragon-normal.conf /etc/nginx/sites-enabled/dragon-normal.conf
     systemctl start nginx
     systemctl restart nginx
 
@@ -396,8 +398,10 @@ elif [ "$choice" == "2" ]; then
     sleep 3
     apt -y install php7.1 php7.1-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache}
     PHP_SOCKET3="/run/php/php7.1-fpm.sock"
-    sed -i -e "s@<php_socket>@${PHP_SOCKET3}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
-    sed -i -e "s@<php_socket>@${PHP_SOCKET3}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET3}@g" /etc/nginx/sites-available/dragon-laravel.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET3}@g" /etc/nginx/sites-available/dragon-normal.conf
+    ln -sf /etc/nginx/sites-available/dragon-laravel.conf /etc/nginx/sites-enabled/dragon-laravel.conf
+    ln -sf /etc/nginx/sites-available/dragon-normal.conf /etc/nginx/sites-enabled/dragon-normal.conf
     systemctl start nginx
     systemctl restart nginx
 
@@ -457,8 +461,10 @@ elif [ "$choice" == "2" ]; then
     sleep 3
     apt -y install php7.2 php7.2-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache}
     PHP_SOCKET4="/run/php/php7.2-fpm.sock"
-    sed -i -e "s@<php_socket>@${PHP_SOCKET4}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
-    sed -i -e "s@<php_socket>@${PHP_SOCKET4}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET4}@g" /etc/nginx/sites-available/dragon-laravel.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET4}@g" /etc/nginx/sites-available/dragon-normal.conf
+    ln -sf /etc/nginx/sites-available/dragon-laravel.conf /etc/nginx/sites-enabled/dragon-laravel.conf
+    ln -sf /etc/nginx/sites-available/dragon-normal.conf /etc/nginx/sites-enabled/dragon-normal.conf
     systemctl start nginx
     systemctl restart nginx
 
@@ -518,8 +524,10 @@ elif [ "$choice" == "2" ]; then
     sleep 3
     apt -y install php7.3 php7.3-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache}
     PHP_SOCKET5="/run/php/php7.3-fpm.sock"
-    sed -i -e "s@<php_socket>@${PHP_SOCKET5}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
-    sed -i -e "s@<php_socket>@${PHP_SOCKET5}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET5}@g" /etc/nginx/sites-available/dragon-laravel.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET5}@g" /etc/nginx/sites-available/dragon-normal.conf
+    ln -sf /etc/nginx/sites-available/dragon-laravel.conf /etc/nginx/sites-enabled/dragon-laravel.conf
+    ln -sf /etc/nginx/sites-available/dragon-normal.conf /etc/nginx/sites-enabled/dragon-normal.conf
     systemctl start nginx
     systemctl restart nginx
 
@@ -579,8 +587,10 @@ elif [ "$choice" == "2" ]; then
     sleep 3
     apt -y install php7.4 php7.4-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache}
     PHP_SOCKET6="/run/php/php7.4-fpm.sock"
-    sed -i -e "s@<php_socket>@${PHP_SOCKET6}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
-    sed -i -e "s@<php_socket>@${PHP_SOCKET6}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET6}@g" /etc/nginx/sites-available/dragon-laravel.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET6}@g" /etc/nginx/sites-available/dragon-normal.conf
+    ln -sf /etc/nginx/sites-available/dragon-laravel.conf /etc/nginx/sites-enabled/dragon-laravel.conf
+    ln -sf /etc/nginx/sites-available/dragon-normal.conf /etc/nginx/sites-enabled/dragon-normal.conf
     systemctl start nginx
     systemctl restart nginx
 
@@ -640,8 +650,10 @@ elif [ "$choice" == "2" ]; then
     sleep 3
     apt -y install php8.0 php8.0-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache}
     PHP_SOCKET7="/run/php/php8.0-fpm.sock"
-    sed -i -e "s@<php_socket>@${PHP_SOCKET7}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
-    sed -i -e "s@<php_socket>@${PHP_SOCKET7}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET7}@g" /etc/nginx/sites-available/dragon-laravel.conf
+    sed -i -e "s@<php_socket>@${PHP_SOCKET7}@g" /etc/nginx/sites-available/dragon-normal.conf
+    ln -sf /etc/nginx/sites-available/dragon-laravel.conf /etc/nginx/sites-enabled/dragon-laravel.conf
+    ln -sf /etc/nginx/sites-available/dragon-normal.conf /etc/nginx/sites-enabled/dragon-normal.conf
     systemctl start nginx
     systemctl restart nginx
 
