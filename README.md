@@ -7,3 +7,7 @@ Bash Script For Easy Installing Apache2, Nginx, Openlitespeed, PHP, MariaDB, Nod
 Also, It has ** Normal (any php script that not using public directory) and ** Laravel (Using public directory) Selection (For now for apache only)!
 
 To Install => Simply run ``` apt -y install wget && wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/installer.sh && bash installer.sh```
+
+# Known Bugs
+
+1- You will have a problem after install nginx that you have to run this ```rm -rf /etc/nginx/sites-enabled/dragon-normal.conf && systemctl restart nginx``` if you have choosed it for Laravel. Also, if you have choosed it for normal (for any php script) then you have to run this ```rm -rf /etc/nginx/sites-enabled/dragon-laravel.conf && systemctl restart nginx```
