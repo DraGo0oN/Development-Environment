@@ -52,12 +52,14 @@ fi
 
 install_or_no
 
+clear
 # Install Important Dependencies
 printf "${GN}Installing Important Dependencies${NC}\n"
 sleep 5
 apt -y install unzip zip wget git curl software-properties-common apt-transport-https ca-certificates gnupg tar gcc g++ make
 sleep 5
 
+clear
 # Add additional repositories for PHP, Redis, and MariaDB
 printf "${GN}Adding additional repositories for PHP,Openlitespeed, Redis, Nodejs, Yarn, and MariaDB${NC}\n"
 sleep 5
@@ -71,11 +73,13 @@ echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/deb
 apt-get update -y
 sleep 5
 
+clear
 # Update repositories list
 printf "${GN}Updating repositories list${NC}\n"
 sleep 5
 apt update -y
 
+clear
 # Add universe repository if you are on Ubuntu 18.04
 printf "${GN}Adding universe repository if you are on Ubuntu 18.04${NC}\n"
 sleep 5
@@ -310,8 +314,7 @@ echo -e "${YO}
 |    ** Please Select Your Favourite SQL Server  **    |
 |                                                      |
 |    1.) MariaDB   (Latest)                            |
-|    2.) MYSQL     (Latest)                            |
-|    3.) Don't Install                                 |
+|    2.) Don't Install                                 |
 |                                                      |
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#${NC}\n"
 
@@ -325,12 +328,6 @@ if [ "$choice" == "1" ]; then
 
 elif [ "$choice" == "2" ]; then
 
-    apt -y install mysql-server
-    systemctl enable mysql-server mysqld mysql
-    systemctl start mysql-server mysqld mysql
-
-elif [ "$choice" == "3" ]; then
-  
     echo -e "Okay 🙂!"
     sleep 3
 
@@ -387,7 +384,7 @@ function nodejs_selection() {
 
 echo -e "${YO}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-|    ** Do you want to install Nodejs? **               |
+|    ** Do you want to install Nodejs? **              |
 |                                                      |
 |    1.) Yes                                           |
 |    2.) No                                            |
