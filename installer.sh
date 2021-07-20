@@ -48,23 +48,21 @@ else
 
 fi
 }
-###openlitespeed##
+install_or_no
+
 function ols() {
+echo -e "${YO}This For Openlitespeed users ( Don't worry if you got any error )${NC}\n"
 SERVICE="lsws"
 ADMIN_PASSWORD=$(cat /usr/local/lsws/adminpasswd)
 if systemctl status "$SERVICE" >/dev/null
 then
-    echo "*** Please Save this ***"
+    echo "*** Please Save This ***"
     echo "Openlitespeed: ${ADMIN_PASSWORD}"
 else
     echo ""
-    # uncomment to start nginx if stopped
-    # systemctl start nginx
-    # mail  
 fi
+echo -e "${YO}###############################################################${NC}\n"
 }
-##################
-install_or_no
 
 clear
 # Install Important Dependencies
@@ -521,5 +519,6 @@ printf "${GN}
 |                                  ${YO}Enjoy!                         ${GN}          |
 |                                                                           |
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#${NC}\n"
-###
+###openlitespeed##
 ols
+##################
