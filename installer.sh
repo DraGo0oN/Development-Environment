@@ -20,6 +20,7 @@ function GetSysInfo() {
 	printf "${YO}Your System Specs${NC}: ${NC}Bit${NC}: ${GN}x${SYS_BIT}${NC} -- ${NC}Ram: ${GN}${MEM_TOTAL}Mb ${NC} -- Cores: ${GN}${CPU_INFO}${NC}\n"
 }
 function install_or_no() {
+startTime=`date +%s`
 GetSysInfo
 echo -e "${YO}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -586,6 +587,9 @@ printf "${GN}
 |                                  ${YO}Enjoy!                         ${GN}          |
 |                                                                           |
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#${NC}\n"
+endTime=`date +%s`
+((outTime=($endTime-$startTime)/60))
+echo -e "Time consumed:\033[32m $outTime \033[0mMinute!"
 ###openlitespeed##
 ols
 ##################
