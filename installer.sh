@@ -164,6 +164,7 @@ elif [ "$choice" == "2" ]; then
     echo -e "Installing Nginx ..."
     apt -y install nginx
     rm -rf /var/www/html/*
+    sleep 3
 function nginx_vhost() {    
 rm -rf /var/www/html/*
 echo -e "${YO}
