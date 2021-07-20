@@ -48,7 +48,21 @@ else
 
 fi
 }
-
+###openlitespeed##
+function ols() {
+SERVICE="lsws"
+ADMIN_PASSWORD=$(cat /usr/local/lsws/adminpasswd)
+if systemctl status "$SERVICE" >/dev/null
+then
+    echo "Openlitespeed: ${ADMIN_PASSWORD}"
+else
+    echo ""
+    # uncomment to start nginx if stopped
+    # systemctl start nginx
+    # mail  
+fi
+}
+##################
 install_or_no
 
 clear
@@ -507,14 +521,4 @@ printf "${GN}
 |                                                                           |
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#${NC}\n"
 ###
-SERVICE="lsws"
-ADMIN_PASSWORD=$(cat /usr/local/lsws/adminpasswd)
-if systemctl status "$SERVICE" >/dev/null
-then
-    echo "${GN}Openlitespeed${NC}:${YO} ${ADMIN_PASSWORD}${NC}\n"
-else
-    echo ""
-    # uncomment to start nginx if stopped
-    # systemctl start nginx
-    # mail  
-fi
+ols
