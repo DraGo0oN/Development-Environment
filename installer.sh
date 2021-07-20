@@ -51,17 +51,21 @@ fi
 install_or_no
 
 function ols() {
-echo -e "${YO}This For Openlitespeed users ( Don't worry if you got any error )${NC}\n"
+    printf "#${YO}##################################################################${NC}#\n"
+    printf "#${YO}                                                                  ${NC}#\n"
+    printf "#${YO}This For Openlitespeed Users ( Don't worry if you got any error ).${NC}#\n"
 SERVICE="lsws"
 ADMIN_PASSWORD=$(cat /usr/local/lsws/adminpasswd)
 if systemctl status "$SERVICE" >/dev/null
 then
-    echo "*** Please Save This ***"
-    echo "Openlitespeed: ${ADMIN_PASSWORD}"
+    printf "#${RD}                      *** Please Save This ***                    ${NC}#\n"
+    printf "#${GN}       Openlitespeed: ${ADMIN_PASSWORD}${NC}    #\n"
+    printf "#${YO}                                                                  ${NC}#\n"
+	printf "#${YO}##################################################################${NC}#\n"
+      
 else
     echo ""
 fi
-echo -e "${YO}###############################################################${NC}\n"
 }
 
 clear
