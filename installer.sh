@@ -127,7 +127,7 @@ function apache_vhost() {
 a2enmod rewrite
 systemctl restart apache2
 a2dissite 000-default.conf
-rm -rf /var/www/html/*
+rm -rf /var/www/html/* && rm -rf /etc/apache2/sites-available/*
 
 echo -e "${YO}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -140,11 +140,11 @@ read -e -p "Select : " choice
 
 if [ "$choice" == "1" ]; then
 
-    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-laravel.conf && a2ensite dragon-laravel.conf && systemctl reload apache2
+    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-laravel.conf /etc/apache2/sites-available/ && a2ensite dragon-laravel.conf && systemctl reload apache2
 
 elif [ "$choice" == "2" ]; then
 
-    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-normal.conf && a2ensite dragon-normal.conf && systemctl reload apache2
+    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-normal.conf /etc/apache2/sites-available/ && a2ensite dragon-normal.conf && systemctl reload apache2
 
 else
 
@@ -180,11 +180,11 @@ read -e -p "Select : " choice
 
 if [ "$choice" == "1" ]; then
 
-    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-laravel.conf
+    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-laravel.conf /etc/nginx/conf.d/
 
 elif [ "$choice" == "2" ]; then
 
-    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-normal.conf
+    wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-normal.conf /etc/nginx/conf.d/
 
 else
 
