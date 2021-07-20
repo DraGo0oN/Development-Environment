@@ -71,14 +71,14 @@ fi
 
 clear
 # Install Important Dependencies
-printf "${GN}Installing Important Dependencies${NC}\n"
+printf "${GN}#### Installing Important Dependencies ####${NC}\n"
 sleep 5
-apt -y install unzip zip wget git curl software-properties-common apt-transport-https ca-certificates gnupg tar gcc g++ make
+apt -y install unzip zip wget git curl software-properties-common apt-transport-https ca-certificates gnupg tar gcc g++ make cmake
 sleep 5
 
 clear
 # Add additional repositories for PHP, Redis, and MariaDB
-printf "${GN}Adding additional repositories for PHP,Openlitespeed, Redis, Nodejs, Yarn, and MariaDB${NC}\n"
+printf "${GN}#### Adding additional repositories for PHP,Openlitespeed, Redis, Nodejs, Yarn, and MariaDB ####${NC}\n"
 sleep 5
 LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
 add-apt-repository -y ppa:chris-lea/redis-server
@@ -92,13 +92,13 @@ sleep 5
 
 clear
 # Update repositories list
-printf "${GN}Updating repositories list${NC}\n"
+printf "${GN}#### Updating repositories list ####${NC}\n"
 sleep 5
 apt update -y
 
 clear
 # Add universe repository if you are on Ubuntu 18.04
-printf "${GN}Adding universe repository if you are on Ubuntu 18.04${NC}\n"
+printf "${GN}#### Adding universe repository if you are on Ubuntu 18.04 ####${NC}\n"
 sleep 5
 apt-add-repository universe
 ##
@@ -123,11 +123,10 @@ if [ "$choice" == "1" ]; then
     echo -e "Installing Apache ..."
     apt -y install apache2
     a2enmod rewrite
-    systemctl restart apache2
     a2dissite 000-default.conf
     rm -rf /var/www/html/* && rm -rf /etc/apache2/sites-available/*
     sleep 3
-
+##
 function apache_vhost() {
 echo -e "${YO}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -140,11 +139,11 @@ read -e -p "Select : " choice
 
 if [ "$choice" == "1" ]; then
 
-    cd /etc/apache2/sites-available && wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-laravel.conf && a2ensite dragon-laravel.conf && systemctl reload apache2
+    curl -o /etc/apache2/sites-available/dragon-laravel.conf https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-laravel.conf && a2ensite dragon-laravel.conf && systemctl reload apache2
 
 elif [ "$choice" == "2" ]; then
 
-    cd /etc/apache2/sites-available && wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-normal.conf && a2ensite dragon-normal.conf && systemctl reload apache2
+    curl -o /etc/apache2/sites-available/dragon-normal.conf https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-normal.conf && a2ensite dragon-normal.conf && systemctl reload apache2
 
 else
 
@@ -156,16 +155,19 @@ fi
 
 apache_vhost
 
-    systemctl enable apache2
-    systemctl start apache2
-    systemctl restart apache2
+systemctl enable apache2
+systemctl start apache2
+systemctl restart apache2
 
 elif [ "$choice" == "2" ]; then
 
     echo -e "Installing Nginx ..."
-    apt -y install nginx
+apt -y install nginx
 rm -rf /var/www/html/*
-    sleep 3
+sleep 3
+# remove default config
+rm -rf /etc/nginx/sites-enabled/default
+###
 function nginx_vhost() {    
 echo -e "${YO}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
@@ -178,11 +180,13 @@ read -e -p "Select : " choice
 
 if [ "$choice" == "1" ]; then
 
-    cd /etc/nginx/conf.d && wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-laravel.conf && rm -rf /etc/nginx/sites-enabled/default
+    curl -o /etc/nginx/sites-available/dragon-laravel.conf https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-laravel.conf 
+    ln -sf /etc/nginx/sites-available/dragon-laravel.conf /etc/nginx/sites-enabled/dragon-laravel.conf
 
 elif [ "$choice" == "2" ]; then
 
-    cd /etc/nginx/conf.d && wget https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-normal.conf && rm -rf /etc/nginx/sites-enabled/default
+    curl -o /etc/nginx/sites-available/dragon-normal.conf  https://raw.githubusercontent.com/mrnitr0/Development-Environment/main/dragon-nginx-normal.conf
+    ln -sf /etc/nginx/sites-available/dragon-normal.conf /etc/nginx/sites-enabled/dragon-normal.conf
 
 else
 
@@ -195,7 +199,7 @@ fi
 nginx_vhost
 
     systemctl enable nginx
-#    systemctl start nginx
+#   systemctl start nginx
 
 elif [ "$choice" == "3" ]; then
 
@@ -240,20 +244,98 @@ if [ "$choice" == "1" ]; then
     
     echo -e "Installing PHP 5.6 ..."
     sleep 5
+##
+clear
+function phphost1_selection() {    
+
+echo -e "${YO}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+|                                |
+|       ##  PHP 5.6  ##          |
+|                                |
+|    ** Please Select **         |
+|                                |
+|    1.) For Apache              |
+|    2.) For Nginx               |
+|    3.) For Openlitespeed       |
+|                                |
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#${NC}\n"
+
+read -e -p "Select : " choice
+
+if [ "$choice" == "1" ]; then
+
+    echo -e "Installing For Apache ..."
+    sleep 3
     apt -y install php5.6 php5.6-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache} libapache2-mod-php5.6
     systemctl restart apache2
+
+
+elif [ "$choice" == "2" ]; then
+
+    echo -e "Installing For Nginx ..."
+    sleep 3
+    apt -y install php5.6 php5.6-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache}
     PHP_SOCKET1="/run/php/php5.6-fpm.sock"
     sed -i -e "s@<php_socket>@${PHP_SOCKET1}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
     sed -i -e "s@<php_socket>@${PHP_SOCKET1}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
     systemctl start nginx
     systemctl restart nginx
 
+elif [ "$choice" == "3" ]; then
+
+    echo -e "Installing For Openlitespeed ..."
+    sleep 3
+    echo -e "Not Available Right Now!" && sleep 3
+    clear && php_selection
+
+else
+
+    printf "${RD}Invalid choice!${NC}🙂\n" && sleep 3
+    clear && phphost1_selection
+
+fi
+}
+
+phphost1_selection
+####
+
 elif [ "$choice" == "2" ]; then
  
     echo -e "Installing PHP 7.0 ..."
     sleep 5
+clear
+###
+function phphost2_selection() {    
+
+echo -e "${YO}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+|                                |
+|       ##  PHP 7.0  ##          |
+|                                |
+|    ** Please Select **         |
+|                                |
+|    1.) For Apache              |
+|    2.) For Nginx               |
+|    3.) For Openlitespeed       |
+|                                |
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#${NC}\n"
+
+read -e -p "Select : " choice
+
+if [ "$choice" == "1" ]; then
+
+    echo -e "Installing For Apache ..."
+    sleep 3
     apt -y install php7.0 php7.0-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache} libapache2-mod-php7.0
     systemctl restart apache2
+
+
+elif [ "$choice" == "2" ]; then
+
+    echo -e "Installing For Nginx ..."
+    sleep 3
+    apt -y install php7.0 php7.0-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache}
     PHP_SOCKET2="/run/php/php7.0-fpm.sock"
     sed -i -e "s@<php_socket>@${PHP_SOCKET2}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
     sed -i -e "s@<php_socket>@${PHP_SOCKET2}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
@@ -262,116 +344,328 @@ elif [ "$choice" == "2" ]; then
 
 elif [ "$choice" == "3" ]; then
 
+    echo -e "Installing For Openlitespeed ..."
+    sleep 3
+	apt -y install lsphp70 lsphp70-{mysql,sqlite3,pgsql,curl,imap}
+    systemctl restart lsws
+
+else
+
+    printf "${RD}Invalid choice!${NC}🙂\n" && sleep 3
+    clear && phphost2_selection
+
+fi
+}
+
+phphost2_selection
+####
+
+elif [ "$choice" == "3" ]; then
+
     echo -e "Installing PHP 7.1 ..."
     sleep 5
+clear
+###
+function phphost3_selection() {    
+
+echo -e "${YO}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+|                                |
+|       ##  PHP 7.1  ##          |
+|                                |
+|    ** Please Select **         |
+|                                |
+|    1.) For Apache              |
+|    2.) For Nginx               |
+|    3.) For Openlitespeed       |
+|                                |
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#${NC}\n"
+
+read -e -p "Select : " choice
+
+if [ "$choice" == "1" ]; then
+
+    echo -e "Installing For Apache ..."
+    sleep 3
     apt -y install php7.1 php7.1-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache} libapache2-mod-php7.1
     systemctl restart apache2
+
+elif [ "$choice" == "2" ]; then
+
+    echo -e "Installing For Nginx ..."
+    sleep 3
+    apt -y install php7.1 php7.1-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache}
     PHP_SOCKET3="/run/php/php7.1-fpm.sock"
     sed -i -e "s@<php_socket>@${PHP_SOCKET3}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
     sed -i -e "s@<php_socket>@${PHP_SOCKET3}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
     systemctl start nginx
     systemctl restart nginx
 
+elif [ "$choice" == "3" ]; then
+
+    echo -e "Installing For Openlitespeed ..."
+    sleep 3
+	apt -y install lsphp71 lsphp71-{mysql,sqlite3,pgsql,curl,imap}
+    systemctl restart lsws
+
+else
+
+    printf "${RD}Invalid choice!${NC}🙂\n" && sleep 3
+    clear && phphost3_selection
+
+fi
+}
+
+phphost3_selection
+####
+
 elif [ "$choice" == "4" ]; then
 
     echo -e "Installing PHP 7.2 ..."
     sleep 5
+####
+clear
+
+function phphost4_selection() {    
+
+echo -e "${YO}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+|                                |
+|       ##  PHP 7.2  ##          |
+|                                |
+|    ** Please Select **         |
+|                                |
+|    1.) For Apache              |
+|    2.) For Nginx               |
+|    3.) For Openlitespeed       |
+|                                |
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#${NC}\n"
+
+read -e -p "Select : " choice
+
+if [ "$choice" == "1" ]; then
+
+    echo -e "Installing For Apache ..."
+    sleep 3
     apt -y install php7.2 php7.2-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache} libapache2-mod-php7.2
     systemctl restart apache2
+
+
+elif [ "$choice" == "2" ]; then
+
+    echo -e "Installing For Nginx ..."
+    sleep 3
+    apt -y install php7.2 php7.2-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache}
     PHP_SOCKET4="/run/php/php7.2-fpm.sock"
     sed -i -e "s@<php_socket>@${PHP_SOCKET4}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
     sed -i -e "s@<php_socket>@${PHP_SOCKET4}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
     systemctl start nginx
     systemctl restart nginx
 
+elif [ "$choice" == "3" ]; then
+
+    echo -e "Installing For Openlitespeed ..."
+    sleep 3
+    apt -y install lsphp72 lsphp72-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
+    systemctl restart lsws
+
+else
+
+    printf "${RD}Invalid choice!${NC}🙂\n" && sleep 3
+    clear && phphost4_selection
+
+fi
+}
+
+phphost4_selection
+####
+
 elif [ "$choice" == "5" ]; then
 
     echo -e "Installing PHP 7.3 ..."
     sleep 5
+####
+clear
+
+function phphost5_selection() {    
+
+echo -e "${YO}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+|                                |
+|       ##  PHP 7.3  ##          |
+|                                |
+|    ** Please Select **         |
+|                                |
+|    1.) For Apache              |
+|    2.) For Nginx               |
+|    3.) For Openlitespeed       |
+|                                |
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#${NC}\n"
+
+read -e -p "Select : " choice
+
+if [ "$choice" == "1" ]; then
+
+    echo -e "Installing For Apache ..."
+    sleep 3
     apt -y install php7.3 php7.3-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache} libapache2-mod-php7.3
     systemctl restart apache2
+
+
+elif [ "$choice" == "2" ]; then
+
+    echo -e "Installing For Nginx ..."
+    sleep 3
+    apt -y install php7.3 php7.3-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache}
     PHP_SOCKET5="/run/php/php7.3-fpm.sock"
     sed -i -e "s@<php_socket>@${PHP_SOCKET5}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
     sed -i -e "s@<php_socket>@${PHP_SOCKET5}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
     systemctl start nginx
     systemctl restart nginx
 
+elif [ "$choice" == "3" ]; then
+
+    echo -e "Installing For Openlitespeed ..."
+    sleep 3
+    apt -y install lsphp73 lsphp73-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
+    systemctl restart lsws
+
+else
+
+    printf "${RD}Invalid choice!${NC}🙂\n" && sleep 3
+    clear && phphost5_selection
+
+fi
+}
+
+phphost5_selection
+####
+
 elif [ "$choice" == "6" ]; then
 
     echo -e "Installing PHP 7.4 ..."
     sleep 5
+####
+clear
+
+function phphost6_selection() {    
+
+echo -e "${YO}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+|                                |
+|       ##  PHP 7.4  ##          |
+|                                |
+|    ** Please Select **         |
+|                                |
+|    1.) For Apache              |
+|    2.) For Nginx               |
+|    3.) For Openlitespeed       |
+|                                |
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#${NC}\n"
+
+read -e -p "Select : " choice
+
+if [ "$choice" == "1" ]; then
+
+    echo -e "Installing For Apache ..."
+    sleep 3
     apt -y install php7.4 php7.4-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache} libapache2-mod-php7.4
     systemctl restart apache2
+
+
+elif [ "$choice" == "2" ]; then
+
+    echo -e "Installing For Nginx ..."
+    sleep 3
+    apt -y install php7.4 php7.4-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache}
     PHP_SOCKET6="/run/php/php7.4-fpm.sock"
     sed -i -e "s@<php_socket>@${PHP_SOCKET6}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
     sed -i -e "s@<php_socket>@${PHP_SOCKET6}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
     systemctl start nginx
     systemctl restart nginx
 
+elif [ "$choice" == "3" ]; then
+
+    echo -e "Installing For Openlitespeed ..."
+    sleep 3
+	apt -y install lsphp74 lsphp74-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
+    systemctl restart lsws
+
+else
+
+    printf "${RD}Invalid choice!${NC}🙂\n" && sleep 3
+    clear && phphost6_selection
+
+fi
+}
+
+phphost6_selection
+####
+
 elif [ "$choice" == "7" ]; then
 
     echo -e "Installing PHP 8.0 ..."
     sleep 5
+####
+clear
+
+function phphost7_selection() {    
+
+echo -e "${YO}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+|                                |
+|       ##  PHP 8.0  ##          |
+|                                |
+|    ** Please Select **         |
+|                                |
+|    1.) For Apache              |
+|    2.) For Nginx               |
+|    3.) For Openlitespeed       |
+|                                |
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#${NC}\n"
+
+read -e -p "Select : " choice
+
+if [ "$choice" == "1" ]; then
+
+    echo -e "Installing For Apache ..."
     apt -y install php8.0 php8.0-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache} libapache2-mod-php8.0
     systemctl restart apache2
+    sleep 3
+
+
+elif [ "$choice" == "2" ]; then
+
+    echo -e "Installing For Nginx ..."
+    sleep 3
+    apt -y install php8.0 php8.0-{cli,gd,mysql,pdo,mbstring,tokenizer,bcmath,xml,fpm,curl,zip,intl,imap,opcache}
     PHP_SOCKET7="/run/php/php8.0-fpm.sock"
     sed -i -e "s@<php_socket>@${PHP_SOCKET7}@g" /etc/nginx/conf.d/dragon-nginx-laravel.conf
     sed -i -e "s@<php_socket>@${PHP_SOCKET7}@g" /etc/nginx/conf.d/dragon-nginx-normal.conf
     systemctl start nginx
     systemctl restart nginx
 
+elif [ "$choice" == "3" ]; then
+
+    echo -e "Installing For Openlitespeed ..."
+    sleep 3
+    apt -y install lsphp80 lsphp80-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
+    systemctl restart lsws
+
+else
+
+    printf "${RD}Invalid choice!${NC}🙂\n" && sleep 3
+    clear && phphost7_selection
+
+fi
+}
+
+phphost7_selection
+####
+
 elif [ "$choice" == "8" ]; then
 
-    echo -e "Installing PHP 5.6 (Openlitespeed) ..."
-    sleep 5
-    echo -e "Not Available Right Now!" && sleep 3
-    clear && php_selection
-
-elif [ "$choice" == "9" ]; then
-
-    echo -e "Installing PHP 7.0 (Openlitespeed) ..."
-    sleep 5
-	apt -y install lsphp70 lsphp70-{mysql,sqlite3,pgsql,curl,imap}
-    systemctl restart lsws
-
-elif [ "$choice" == "10" ]; then
-
-    echo -e "Installing PHP 7.1 (Openlitespeed) ..."
-    sleep 5
-	apt -y install lsphp71 lsphp71-{mysql,sqlite3,pgsql,curl,imap}
-    systemctl restart lsws
-
-elif [ "$choice" == "11" ]; then
-
-    echo -e "Installing PHP 7.2 (Openlitespeed) ..."
-    sleep 5
-	apt -y install lsphp72 lsphp72-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
-    systemctl restart lsws
-
-elif [ "$choice" == "12" ]; then
-
-    echo -e "Installing PHP 7.3 (Openlitespeed) ..."
-    sleep 5
-	apt -y install lsphp73 lsphp73-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
-    systemctl restart lsws
-
-elif [ "$choice" == "13" ]; then
-
-    echo -e "Installing PHP 7.4 (Openlitespeed) ..."
-    sleep 5
-	apt -y install lsphp74 lsphp74-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
-    systemctl restart lsws
-
-elif [ "$choice" == "14" ]; then
-
-    echo -e "Installing PHP 8.0 (Openlitespeed) ..."
-    sleep 5
-	apt -y install lsphp80 lsphp80-{mysql,tidy,sqlite3,pgsql,curl,intl,imap,snmp}
-    systemctl restart lsws
-
-elif [ "$choice" == "15" ]; then
-
-    echo -e "Okay!"
+    echo -e "Okay! 🙂"
     sleep 3
 
 else
