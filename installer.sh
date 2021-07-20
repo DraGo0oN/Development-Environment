@@ -164,10 +164,9 @@ elif [ "$choice" == "2" ]; then
 
     echo -e "Installing Nginx ..."
     apt -y install nginx
-    rm -rf /var/www/html/*
+rm -rf /var/www/html/*
     sleep 3
 function nginx_vhost() {    
-rm -rf /var/www/html/*
 echo -e "${YO}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 |                    ** Please Select **                       |
@@ -223,15 +222,15 @@ echo -e "${YO}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 |    ** Please Select Your Favourite PHP Version **    |
 |                                                      |
-|    1.) 5.6               8.) 5.6   (Openlitespeed)   |
-|    2.) 7.0               9.) 7.0   (Openlitespeed)   |
-|    3.) 7.1               10.) 7.1  (Openlitespeed)   |
-|    4.) 7.2               11.) 7.2  (Openlitespeed)   |
-|    5.) 7.3               12.) 7.3  (Openlitespeed)   |
-|    6.) 7.4               13.) 7.4  (Openlitespeed)   |
-|    7.) 8.0               14.) 8.0  (Openlitespeed)   |
+|    1.) 5.6                                           |
+|    2.) 7.0                                           |
+|    3.) 7.1                                           |
+|    4.) 7.2                                           |
+|    5.) 7.3                                           |
+|    6.) 7.4                                           |
+|    7.) 8.0                                           |
 |                                                      |
-|              15.) Don't Install                      |
+|                8.) Don't Install                     |
 |                                                      |
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#${NC}\n"
 
@@ -574,7 +573,47 @@ fi
 
 python_selection
 ##
-sleep 3
+clear
+
+function composer_selection() {    
+
+echo -e "${YO}
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+|         ** Do you want to install composer? **       |
+|                                                      |
+|              1.) Yes                                 |
+|              2.) No                                  |
+|                                                      |
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#${NC}\n"
+
+read -e -p "Select : " choice
+
+if [ "$choice" == "1" ]; then
+
+    echo -e "Installing Composer (Latest) ..."
+    sleep 5
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    php -r "if (hash_file('sha384', 'composer-setup.php') === '756890a4488ce9024fc62c56153228907f1545c228516cbf63f885e036d37e9a59d27d63f46af1d4d07ee0f76181c7d3') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+    php composer-setup.php --install-dir=/usr/bin --filename=composer
+
+
+elif [ "$choice" == "2" ]; then
+
+    echo -e "Okay!"
+    sleep 5
+
+
+else
+
+    printf "${RD}Invalid choice!${NC}🙂\n" && sleep 3
+    clear && composer_selection
+
+fi
+}
+
+composer_selection
+sleep 2
+##
 clear
 printf "${GN}
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
